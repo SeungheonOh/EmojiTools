@@ -4,6 +4,6 @@
 
 
 int main(){
-  std::cout << EmojiTools::countEmoji("Hello World!😄");
+  std::cout << EmojiTools::deEmojize("Hello World!😄");
   return 0;
 }
