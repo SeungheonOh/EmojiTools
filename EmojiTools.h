@@ -2,7 +2,9 @@
 #define EmojiTools_H
 
 #include <string>
+#include <sstream>
 #include <map>
+#include <cmath>
 
 namespace EmojiTools{
   static std::map<unsigned int, std::string> Emojis = {
@@ -933,10 +935,7 @@ namespace EmojiTools{
     {0xf09fa494 , "thinking_face"},
     {0xf09f92ad , "thought_balloon"},
     {0xf09f96b1 , "three_button_mouse"},
-    {0xf09f918d , "+1"},
     {0xf09f918d , "thumbsup"},
-    {0xf09f918e , "__1"},
-    {0xf09f918e , "-1"},
     {0xf09f918e , "thumbsdown"},
     {0xe29b8800 , "thunder_cloud_and_rain"},
     {0xf09f8eab , "ticket"},
@@ -1089,6 +1088,61 @@ namespace EmojiTools{
         ret += dividerFront + it -> second + dividerRear;
         index = emojiBuffer = 0;
       }
+    }
+    *s = ret;
+  }
+  std::string getEmoji(std::string s){
+    for(const auto &it : Emojis){
+      if(it.second == s){
+        std::stringstream emojiValue;
+        emojiValue << (char)(it.first >> 8 * 3);
+        for(int i = 1; i < 4; i++){
+          emojiValue << (char)((it.first >> 8 * (3 - i)) - ((it.first >> 8 * (4 - i)) << 8));
+        }
+        return emojiValue.str();
+      }
+    }
+    return "";
+  }
+  std::string emojize(std::string s){
+    bool emojiStarts = false;
+    std::string ret, emojiName;
+    for(int i = 0; i < s.length(); i++){
+      if(s[i] == ':'){
+        if(emojiStarts){
+          std::string emoji = EmojiTools::getEmoji(emojiName);
+          ret += emoji;
+          emojiName = "";
+        }
+        emojiStarts ^= true;
+        continue;
+      }
+      if(emojiStarts){
+        emojiName += s[i];
+        continue;
+      }
+      ret += s[i];
+    }
+    return ret;
+  }
+  void emojize(std::string *s){
+    bool emojiStarts = false;
+    std::string ret, emojiName;
+    for(int i = 0; i < s -> length(); i++){
+      if((*s)[i] == ':'){
+        if(emojiStarts){
+          std::string emoji = EmojiTools::getEmoji(emojiName);
+          ret += emoji;
+          emojiName = "";
+        }
+        emojiStarts ^= true;
+        continue;
+      }
+      if(emojiStarts){
+        emojiName += (*s)[i];
+        continue;
+      }
+      ret += (*s)[i];
     }
     *s = ret;
   }
