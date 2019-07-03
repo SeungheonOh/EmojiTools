@@ -1054,7 +1054,7 @@ namespace EmojiTools{
     {0xe298af00 , "yin_yang"},
     {0xf09fa490 , "zipper__mouth_face"}
   };
-  std::string deEmojize(std::string s, std::string dividerFront = ":", std::string dividerRear = ":"){
+  template<class Divider = std::string> std::string deEmojize(std::string s, Divider dividerFront = ":", Divider dividerRear = ":"){
     std::string ret;
     unsigned int emojiBuffer = 0, index = 0;
     for(int i = 0; i < s.length(); i++){
@@ -1073,7 +1073,7 @@ namespace EmojiTools{
     }
     return ret;
   }
-  void deEmojize(std::string *s, std::string dividerFront = ":", std::string dividerRear = ":"){
+  template<class Divider = std::string> void deEmojize(std::string *s, Divider dividerFront = ":", Divider dividerRear = ":"){
     std::string ret;
     unsigned int emojiBuffer = 0, index = 0;
     for(int i = 0; i < s -> length(); i++){
