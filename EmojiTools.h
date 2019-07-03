@@ -1,3 +1,6 @@
+#ifndef EmojiTools_H
+#define EmojiTools_H
+
 #include <string>
 #include <map>
 
@@ -1146,3 +1149,5 @@ namespace EmojiTools{
     return emojiCount;
   }
 }
+
+#endif
