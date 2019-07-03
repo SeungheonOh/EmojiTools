@@ -1054,26 +1054,7 @@ namespace EmojiTools{
     {0xe298af00 , "yin_yang"},
     {0xf09fa490 , "zipper__mouth_face"}
   };
-  std::string deEmojize(std::string s){
-    std::string ret;
-    unsigned int emojiBuffer = 0, index = 0;
-    for(int i = 0; i < s.length(); i++){
-      std::map<unsigned int, std::string>::iterator it;
-
-      if(s[i] > 0){
-        ret += s[i];
-        continue;
-      }
-      emojiBuffer += (unsigned int)(unsigned char)s[i] << 8 * (3 - index++);
-      it = Emojis.find(emojiBuffer);
-      if(it -> second != ""){
-        ret += ":" + it -> second + ":";
-        index = emojiBuffer = 0;
-      }
-    }
-    return ret;
-  }
-  std::string deEmojize(std::string s, std::string dividerFront, std::string dividerRear){
+  std::string deEmojize(std::string s, std::string dividerFront = ":", std::string dividerRear = ":"){
     std::string ret;
     unsigned int emojiBuffer = 0, index = 0;
     for(int i = 0; i < s.length(); i++){
@@ -1092,26 +1073,7 @@ namespace EmojiTools{
     }
     return ret;
   }
-  void deEmojize(std::string *s){
-    std::string ret;
-    unsigned int emojiBuffer = 0, index = 0;
-    for(int i = 0; i < s -> length(); i++){
-      std::map<unsigned int, std::string>::iterator it;
-
-      if((*s)[i] > 0){
-        ret += (*s)[i];
-        continue;
-      }
-      emojiBuffer += (unsigned int)(unsigned char)(*s)[i] << 8 * (3 - index++);
-      it = Emojis.find(emojiBuffer);
-      if(it -> second != ""){
-        ret += ":" + it -> second + ":";
-        index = emojiBuffer = 0;
-      }
-    }
-    *s = ret;
-  }
-  void deEmojize(std::string *s, std::string dividerFront, std::string dividerRear){
+  void deEmojize(std::string *s, std::string dividerFront = ":", std::string dividerRear = ":"){
     std::string ret;
     unsigned int emojiBuffer = 0, index = 0;
     for(int i = 0; i < s -> length(); i++){
