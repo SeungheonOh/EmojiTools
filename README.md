@@ -9,3 +9,5 @@ std::cout << EmojiTools::deEmojize("de-emojizing a text! 👻");
 
 > de-emojizing a text! `:ghost:`
 
+
+There's some example usage of EmojiTools in example.cpp!
