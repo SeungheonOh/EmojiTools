@@ -7,6 +7,7 @@
 int main(){
   auto start = std::chrono::high_resolution_clock::now();
   std::string a = "Hello World!😄";
+  EmojiTools::loadEmojiList();
   std::cout << EmojiTools::deEmojize(a) << std::endl;
   std::cout << EmojiTools::deEmojize<char>(a, '{', '}') << std::endl;
   std::cout << "Numbers of emojis : " << EmojiTools::countEmoji(a) << std::endl;

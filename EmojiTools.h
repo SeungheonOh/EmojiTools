@@ -12,28 +12,28 @@
 #define EMOJILIST_SPERATOR ";"
 
 namespace EmojiTools{
+  static std::map<unsigned int, std::string> Emojis;
+  void loadEmojiList(){
+    std::ifstream emojiFile;
+    emojiFile.open(EMOJILIST_FILENAME);
+    std::string line;
+    while(std::getline(emojiFile, line)){
+      Emojis.insert(std::pair<unsigned int, std::string>(std::stoul(line.substr(0,8), nullptr, 16), line.substr(9)));
+    }
+  }
   std::pair<unsigned int, std::string> findByKey(unsigned int k){
     std::pair<unsigned int, std::string> ret;
-    std::ifstream emojis;
-    emojis.open(EMOJILIST_FILENAME);
-    std::string line;
-    while(std::getline(emojis, line)){
-      unsigned int key = std::stoul(line.substr(0, line.find(EMOJILIST_SPERATOR)), nullptr, 16);
-      if(key == k){
-        ret = {key, line.substr(line.find(EMOJILIST_SPERATOR) + 1)};
-      }
-    }
+    std::map<unsigned int, std::string>::iterator it;
+    it = Emojis.find(k);
+    ret = {it -> first, it -> second};
     return ret;
   }
   std::pair<unsigned int, std::string> findByValue(std::string v){
     std::pair<unsigned int, std::string> ret;
-    std::ifstream emojis;
-    emojis.open(EMOJILIST_FILENAME);
-    std::string line;
-    while(std::getline(emojis, line)){
-      std::string value = line.substr(line.find(EMOJILIST_SPERATOR) + 1);
-      if(value == v){
-        ret = {std::stoul(line.substr(0, line.find(EMOJILIST_SPERATOR)), nullptr, 16), value};
+    for(const auto &it : Emojis){
+      if(it.second == v){
+        ret = {it.first, it.second};
+        return ret;
       }
     }
     return ret;
