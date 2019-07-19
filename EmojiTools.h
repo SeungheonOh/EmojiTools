@@ -1053,7 +1053,7 @@ namespace EmojiTools{
     {0xe298af00 , "yin_yang"},
     {0xf09fa490 , "zipper__mouth_face"}
   };
-  inline template<class Divider = std::string> std::string deEmojize(std::string s, Divider dividerFront = ":", Divider dividerRear = ":"){
+  template<class Divider = std::string> inline std::string deEmojize(std::string s, Divider dividerFront = ":", Divider dividerRear = ":"){
     std::string ret;
     unsigned int emojiBuffer = 0, index = 0;
     for(int i = 0; i < s.length(); i++){
@@ -1071,8 +1071,8 @@ namespace EmojiTools{
       }
     }
     return ret;
-  }
-  inline template<class Divider = std::string> void deEmojize(std::string *s, Divider dividerFront = ":", Divider dividerRear = ":"){
+  };
+  template<class Divider = std::string> inline void deEmojize(std::string *s, Divider dividerFront = ":", Divider dividerRear = ":"){
     std::string ret;
     unsigned int emojiBuffer = 0, index = 0;
     for(int i = 0; i < s -> length(); i++){
@@ -1090,7 +1090,7 @@ namespace EmojiTools{
       }
     }
     *s = ret;
-  }
+  };
   inline std::string getEmoji(std::string s){
     for(const auto &it : Emojis){
       if(it.second == s){
@@ -1103,7 +1103,7 @@ namespace EmojiTools{
       }
     }
     return "";
-  }
+  };
   inline std::string emojize(std::string s){
     bool emojiStarts = false;
     std::string ret, emojiName;
@@ -1124,7 +1124,7 @@ namespace EmojiTools{
       ret += s[i];
     }
     return ret;
-  }
+  };
   inline void emojize(std::string *s){
     bool emojiStarts = false;
     std::string ret, emojiName;
@@ -1145,7 +1145,7 @@ namespace EmojiTools{
       ret += (*s)[i];
     }
     *s = ret;
-  }
+  };
   inline int countEmoji(std::string s){
     int emojiCount = 0;
     unsigned int emojiBuffer = 0, index = 0;
@@ -1163,7 +1163,7 @@ namespace EmojiTools{
       }
     }
     return emojiCount;
-  }
+  };
 }
 
 #endif
