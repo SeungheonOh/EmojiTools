@@ -7,6 +7,7 @@
 #include <cmath>
 
 namespace EmojiTools{
+  static unsigned int emojiRange[] = {0xf0000000, 0xe2000000};
   static std::map<unsigned int, std::string> Emojis = {
     {0xf09f8e9f , "admission_tickets"},
     {0xf09f9aa1 , "aerial_tramway"},
@@ -1063,7 +1064,21 @@ namespace EmojiTools{
         ret += s[i];
         continue;
       }
-      emojiBuffer += (unsigned int)(unsigned char)s[i] << 8 * (3 - index++);
+      emojiBuffer += (unsigned int)(unsigned char)s[i] << 8 * (3 - index);
+      if(index == 0){
+        bool isEmoji = false;
+        for(auto check : emojiRange){
+          if(check == emojiBuffer){
+            isEmoji = true;
+          }
+        }
+        if(!isEmoji){
+          ret += s[i];
+          index = emojiBuffer = 0;
+          continue;
+        }
+      }
+      index ++;
       it = Emojis.find(emojiBuffer);
       if(it -> second != ""){
         ret += dividerFront + it -> second + dividerRear;
@@ -1082,7 +1097,21 @@ namespace EmojiTools{
         ret += (*s)[i];
         continue;
       }
-      emojiBuffer += (unsigned int)(unsigned char)(*s)[i] << 8 * (3 - index++);
+      emojiBuffer += (unsigned int)(unsigned char)(*s)[i] << 8 * (3 - index);
+      if(index == 0){
+        bool isEmoji = false;
+        for(auto check : emojiRange){
+          if(check == emojiBuffer){
+            isEmoji = true;
+          }
+        }
+        if(!isEmoji){
+          ret += (*s)[i];
+          index = emojiBuffer = 0;
+          continue;
+        }
+      }
+      index ++;
       it = Emojis.find(emojiBuffer);
       if(it -> second != ""){
         ret += dividerFront + it -> second + dividerRear;
